@@ -1,11 +1,10 @@
-const cors = require('cors');
-const dotenv = require('dotenv');
 const express = require('express');
 const Sequelize = require('sequelize');
-
-const app = express();
+const dotenv = require('dotenv');
+const cors = require('cors');
 
 dotenv.config({ path: './.env' });
+const app = express();
 
 app.use(cors());
 
@@ -19,23 +18,22 @@ const errorJSON = function (res, errCode, errMsg) {
     });
 };
 
-const {
-    PORT,
-    POSTGRES_DATABASE,
-    POSTGRES_USER,
-    POSTGRES_PASS,
-    POSTGRES_HOST,
-    POSTGRES_PORT,
-    POSTGRES_DIALECT,
-    TABLE_PRODUCTS,
-    URL_PRODUCTS,
-    TABLE_STORES,
-    URL_STORES,
-    TABLE_ORDERS,
-    URL_ORDERS,
-    TABLE_DETAILS,
-    URL_DETAILS,
-} = process.env;
+const PORT = 25788;
+const POSTGRES_DATABASE = 'angular3';
+const POSTGRES_USER = 'postgres';
+const POSTGRES_PASS = 'postgres';
+const POSTGRES_HOST = 'localhost';
+const POSTGRES_PORT = 5432;
+const POSTGRES_DIALECT = 'postgres';
+const TABLE_PRODUCTS = 'Products';
+const URL_PRODUCTS = '/api/Products/';
+const TABLE_STORES = 'Stores';
+const URL_STORES = '/api/Stores/';
+const TABLE_ORDERS = 'Orders';
+const URL_ORDERS = '/api/Orders/';
+const TABLE_DETAILS = 'DetailsOrder';
+const URL_DETAILS = '/api/DetailsOrder/';
+
 
 const sequelize = new Sequelize(
     POSTGRES_DATABASE,
@@ -337,7 +335,7 @@ app.post(`${URL_DETAILS}add/batch`, (req, res) => {
         .catch(error => console.log(`ERROR WHILE ADDING DATA: ${error}`));
 });
 
-app.use(function (req, res, next) {
+app.use(function (req, res) {
     errorJSON(res, 404, 'URL no encontrada');
 });
 
